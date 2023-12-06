@@ -139,7 +139,7 @@ directions = {
 
 
 
-class Position(namedtuple('Position', 'board score')):
+class Position(namedtuple('Position', 'board score mode')):
     """ A state of a chess game
     board -- a 256 char representation of the board
     score -- the board evaluation
@@ -193,7 +193,7 @@ class Position(namedtuple('Position', 'board score')):
     def rotate(self):
         ''' Rotates the board, preserving enpassant '''
         return Position(
-            self.board[-2::-1].swapcase() + " ", -self.score)
+            self.board[-2::-1].swapcase() + " ", -self.score, self.mode)
 
     def nullmove(self):
         ''' Like rotate, but clears ep and kp '''
@@ -205,14 +205,18 @@ class Position(namedtuple('Position', 'board score')):
         put = lambda board, i, p: board[:i] + p + board[i+1:]
         # Copy variables and reset ep and kp
         board = self.board
-        score = self.score + self.value(move)
+        if self.mode == 's':
+            score = self.score + self.value(move)
+        else:
+            score = self.score
         # Actual move
         board = put(board, j, board[i])
         board = put(board, i, '.')
-        return Position(board, score).rotate()
+        return Position(board, score, self.mode).rotate()
 
     def value(self, move):
         i, j = move
+        
         p, q = self.board[i], self.board[j]
         # Actual move
         score = pst[p][j] - pst[p][i]

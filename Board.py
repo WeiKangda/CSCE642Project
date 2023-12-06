@@ -371,7 +371,10 @@ class Board:
             if (-p) // 100 == 1:
                 op_king = (-p)%100
         if my_king%10 == op_king%10:
-            for i in range(my_king//10+1,op_king//10):
+            
+            _s = min(my_king//10, op_king//10)
+            _e = max(my_king//10, op_king//10)
+            for i in range(_s+1,_e):
                 if self.situation[i][op_king%10]!=0:
                     return
             self.not_end_number = 0

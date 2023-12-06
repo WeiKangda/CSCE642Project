@@ -30,7 +30,7 @@ def print_pos(pos):
     print('    ａｂｃｄｅｆｇｈｉ\n\n')
 
 def main(mode):
-    hist = [Position(initial, 0)]
+    hist = [Position(initial, 0, mode)]
     
     # AI first 
     if mode == 's':

@@ -203,6 +203,9 @@ class AlphaZero:
         
     
     def search(self):
+        self.board.not_end()
+        if not self.board.not_end_number:
+            return None
         ai_move = self.mcts.get_move()
         self.board.next_move = ai_move
         self.board.move()

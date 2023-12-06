@@ -118,7 +118,6 @@ class MCTS(object):
             # Greedily select next move.
             board_temp.next_move, node = node.select(self._c_puct)  # action, node =
             board_temp.move()
-            print("move")
         board_temp.find_move()
         board_temp.not_end()
         if board_temp.not_end_number:
